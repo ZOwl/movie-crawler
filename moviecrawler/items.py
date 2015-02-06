@@ -20,6 +20,7 @@ class MovieItem(Item):
 class DetailsItem(Item):
     mid = Field()
     source = Field()
+    city_name = Field()
     cinema_name = Field()
     time = Field()
     price = Field()

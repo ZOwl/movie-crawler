@@ -101,12 +101,17 @@ class MovieSpider(Spider):
                     )
             yield Request(url="%s%s" % (HOST, details.extract()[0]), callback=self.get_details)
 
-    def get_details(self, response):
-        items = response.selector.xpath("//div[@class='movie_block_schedule_query']//a[contains(@href, '?cid=')]/@href")
-        for item in items:
-            yield Request(url="%s%s" % (HOST, item.extract()), callback=self.get_details_by_city)
+    def get_schedule(self, response):
+        pass
 
-    def get_details_by_city(self, response):
+    def get_details(self, response):
+        items = response.selector.xpath("//div[@class='movie_block_schedule_query']//a[contains(@href, '?cid=')]")
+        for item in items:
+            city_name = item.xpath("text()").extract()[0]
+            uri = item.xpath("@href").extract()[0]
+            yield Request(url="%s%s" % (HOST, uri), callback=lambda r,cn=city_name: self.get_details_by_city(r,cn))
+
+    def get_details_by_city(self, response, city_name):
         items = response.selector.xpath("//table[@class='center_table table table-bordered table-condensed']//tbody//tr")
         s = response.url[30:] # FIXME(ZOwl): using magic number, need refactoring
         m = re.match(r'(\d+)/schedule/(\w+)/.*', s)
@@ -116,11 +121,12 @@ class MovieSpider(Spider):
             attendance = temp_records[4].extract()
             if(attendance == u"请登录"):
                 yield Request(url=self.start_urls[0], callback=lambda r,f=True: self.login(r, isRelogin=f))
-                yield Request(url=response.url, callback=self.get_details_by_city)
+                yield Request(url=response.url, callback=lambda r,cn=city_name: self.get_details_by_city(r,cn))
                 return
 
             yield DetailsItem(mid=m.group(1),
                     source=SOURCES[m.group(2)],
+                    city_name=city_name,
                     cinema_name=temp_records[0].extract(),
                     time=temp_records[1].extract(),
                     price=temp_records[2].extract(),
