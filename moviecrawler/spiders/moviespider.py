@@ -120,8 +120,8 @@ class MovieSpider(Spider):
             temp_records = item.xpath("td/text()")
             attendance = temp_records[4].extract()
             if(attendance == u"请登录"):
-                yield Request(url=self.start_urls[0], callback=lambda r,f=True: self.login(r, isRelogin=f))
-                yield Request(url=response.url, callback=lambda r,cn=city_name: self.get_details_by_city(r,cn))
+                yield Request(url=self.start_urls[0], callback=lambda r,f=True: self.login(r, isRelogin=f), dont_filter=True)
+                yield Request(url=response.url, callback=lambda r,cn=city_name: self.get_details_by_city(r,cn), dont_filter=True)
                 return
 
             yield DetailsItem(mid=m.group(1),
