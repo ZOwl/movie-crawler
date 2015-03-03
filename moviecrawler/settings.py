@@ -6,6 +6,10 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #
 
+from os import path
+
+PROJECT_ROOT = path.dirname(path.abspath(__file__))
+
 BOT_NAME = 'moviecrawler'
 
 SPIDER_MODULES = ['moviecrawler.spiders']
@@ -25,4 +29,16 @@ DOWNLOADER_MIDDLEWARES = {
 
 # COOKIES_ENABLED = True
 # COOKIES_DEBUG = True
-ITEM_PIPELINES = { 'moviecrawler.pipelines.CSVPipeline': 1 }
+ITEM_PIPELINES = {
+    'moviecrawler.pipelines.CSVPipeline': 2,
+    'moviecrawler.pipelines.PPPipeline': 1
+    }
+
+# Include localsettings.py
+local_settings_path = path.join(PROJECT_ROOT, 'localsettings.py')
+if path.exists(local_settings_path):
+    # use execfile to allow modifications within this context
+    execfile(local_settings_path)
+else:
+    import sys
+    sys.stderr.write("Can't find local settings, using default settings.\n")

@@ -6,6 +6,8 @@
 
 import re
 import random
+import itertools
+import time
 
 from datetime import datetime, date, timedelta
 from scrapy.spider import Spider
@@ -13,8 +15,11 @@ from scrapy.selector import Selector
 from scrapy.item import Item
 from scrapy.http import FormRequest,Request
 from scrapy import log
+from scrapy.conf import settings
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
 
-from moviecrawler.items import MovieItem, DetailsItem
+from moviecrawler.items import MovieItem, DetailsItem, PPItem, Film, City, Theater, AlchemyBase
 
 SOURCES = {
     "wangpiao": u"网票",
@@ -24,13 +29,15 @@ SOURCES = {
     "jinyi": u"金逸",
     "tpiao": u"淘电影"
     }
-HOST = "http://58921.com"
+
+SITE = "http://58921.com"
+PP_SITE = "http://pp.58921.com"
 
 class MovieSpider(Spider):
     name = 'moviespider'
     sid = ''
     papers = []
-    start_urls = ["%s/user/login" % HOST]
+    start_urls = ["%s/user/login" % SITE]
 
     def __init__(self, start=None, end=None, *args, **kwargs):
         # LOG_FILE = "scrapy_%s_%s.log" % (self.name, datetime.now())
@@ -62,6 +69,9 @@ class MovieSpider(Spider):
             print "USAGE: scrapy crawler moviespider -a start='[yyyy-mm-dd]' -a end='[yyyy-mm-dd]'"
             return
 
+        engine = create_engine(settings['SQLALCHEMY_ENGINE_URL'])
+        self.session = scoped_session(sessionmaker(engine))()
+
     def parse(self, response):
         return self.login(response);
 
@@ -76,7 +86,7 @@ class MovieSpider(Spider):
             for k, v in SOURCES.items():
                 for n in range(int ((self.end_date - self.start_date).days) + 1):
                     d = self.start_date + timedelta(n)
-                    url = "%s/boxoffice/%s/%s/" % (HOST, k, datetime.strftime(d, "%Y%m%d"))
+                    url = "%s/boxoffice/%s/%s/" % (SITE, k, datetime.strftime(d, "%Y%m%d"))
                     yield Request(url=url, callback=lambda r, f=datetime.strftime(d, "%Y-%m-%d"), s=v: self.get_daily_box_office(r, f, s))
 
     def get_daily_box_office(self, response, cdate, source):
@@ -88,8 +98,13 @@ class MovieSpider(Spider):
             name = lst[0].xpath("a/text()").extract()[0]
             box_office = lst[1].xpath("a/text()").extract()[0]
             invalid_sessions = lst[4].xpath("text()").extract()[0]
-            mantime = lst[5].xpath("a/text()").extract()[0]
+            mantime_extracted = lst[5].xpath("a/text()").extract()
+            if mantime_extracted: mantime=mantime_extracted[0]
             details = lst[7].xpath("a[@title='%s']/@href" % u"明细")
+
+            yield Request(url="%s/film/%s" % (SITE, mid), callback=lambda r, m=mid: self.get_film(r, m))
+            # yield Request(url="%s/film/%s" % (PP_SITE, mid), callback=lambda r, d=cdate: self.get_pp(r, d))
+
             yield MovieItem(
                     mid=mid,
                     date=cdate,
@@ -99,17 +114,96 @@ class MovieSpider(Spider):
                     invalid_sessions=invalid_sessions,
                     mantime=mantime
                     )
-            yield Request(url="%s%s" % (HOST, details.extract()[0]), callback=self.get_details)
+            start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
+            yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
 
-    def get_schedule(self, response):
-        pass
+    def get_film(self, response, mid):
+        sel = response.selector
+        name_item = sel.xpath("//div[@id='main']//div[@class='page-header']//h1/text()")
+        name = name_item[0].extract().strip()
+
+        yield Film(id=int(mid), name=name)
+
+    def get_pp(self, response, cdate):
+        sel = response.selector
+        cities = sel.xpath("//table[@class='table table-bordered table-condensed']//thead//tr//th//a")
+        other_cities=sel.xpath("//div[@id='2']//li//a")
+        # pp_dates = sel.xpath("//div[@id='content']//li//a/text()").re(r'.+\d+')
+
+        for city in itertools.chain(cities, other_cities):
+            name = city.xpath("text()").extract()[0].split(" ")[0]
+            link = city.xpath("@href").extract()[0]
+
+            yield City(name=name)
+            city = self.session.query(City).filter_by(name=name).first()
+            yield Request(url="%s%s/%s" % (PP_SITE, link, cdate.replace("-", "")), callback=lambda r,cid=city.id: self.get_pp_details(r, cid))
+
+    def get_pp_details(self, response, city_id):
+        sel = response.selector
+        theaters=sel.xpath("//table[@class='table table-bordered table-condensed']//tbody//tr//td//a/text()")
+
+        for theater in theaters:
+            yield Theater(name=theater.extract(), city_id=city_id)
 
     def get_details(self, response):
         items = response.selector.xpath("//div[@class='movie_block_schedule_query']//a[contains(@href, '?cid=')]")
         for item in items:
             city_name = item.xpath("text()").extract()[0]
             uri = item.xpath("@href").extract()[0]
-            yield Request(url="%s%s" % (HOST, uri), callback=lambda r,cn=city_name: self.get_details_by_city(r,cn))
+            yield Request(url="%s%s" % (SITE, uri), callback=lambda r,cn=city_name: self.get_details_by_city(r,cn))
+
+    def get_details_by_time_range(self, response, time_range):
+        start, step = time_range
+        sel = response.selector
+
+        pager_item = sel.xpath("//ul[@class='pager']")
+        pager_number_item = pager_item.xpath("li[@class='pager_count']//span[@class='pager_number']/text()").extract()
+        end = start + step
+
+        if pager_number_item:
+            pager_number = int(pager_number_item[0].split("/")[1])
+            if pager_number > 10:
+                if step > 1:
+                    new_step = step/2
+                    url_prefix = response.url.rsplit("?", 1)[0]
+                    median = start + new_step
+                    yield Request(url="%s?start=%s&end=%s" % (url_prefix, start, median), callback=lambda r,tr=(start, new_step): self.get_details_by_time_range(r,tr))
+                    yield Request(url="%s?start=%s&end=%s" % (url_prefix, median, end), callback=lambda r,tr=(median, new_step): self.get_details_by_time_range(r,tr))
+
+                    return
+            else:
+                next_page = pager_item.xpath("li[@class='pager_next']//a/@href").extract()
+                if(next_page):
+                    yield Request(url="%s%s" % (SITE, next_page[0]), callback=lambda r,tr=time_range: self.get_details_by_time_range(r,tr))
+
+        items = sel.xpath("//table[@class='center_table table table-bordered table-condensed']//tbody//tr")
+        s = response.url[30:] # FIXME(ZOwl): using magic number, need refactoring
+        m = re.match(r'(\d+)/schedule/(\w+)/.*', s)
+
+        for item in items:
+            temp_records = item.xpath("td/text()")
+            attendance = temp_records[4].extract()
+            if(attendance == u"请登录"):
+                yield Request(url=self.start_urls[0], callback=lambda r,f=True: self.login(r, isRelogin=f), dont_filter=True)
+                yield Request(url=response.url, callback=lambda r,tr=time_range: self.get_details_by_time_range(r,tr))
+                return
+
+            cinema_name=temp_records[0].extract()
+            theater = self.session.query(Theater).filter_by(name=unicode(cinema_name)).first()
+            city_name = None
+            if theater:
+                city = self.session.query(City).filter_by(id=theater.city_id).first()
+                if city:
+                    city_name=city.name
+
+            yield DetailsItem(mid=m.group(1),
+                    source=SOURCES[m.group(2)],
+                    city_name=city_name,
+                    cinema_name=cinema_name,
+                    time=temp_records[1].extract(),
+                    price=temp_records[2].extract(),
+                    seating=temp_records[3].extract(),
+                    attendance=attendance)
 
     def get_details_by_city(self, response, city_name):
         items = response.selector.xpath("//table[@class='center_table table table-bordered table-condensed']//tbody//tr")
@@ -135,7 +229,7 @@ class MovieSpider(Spider):
 
         next_page = response.selector.xpath("//div[@class='item-list item_pager']//ul[@class='pager']//li[@class='pager_next']//a/@href")
         if(next_page):
-            yield Request(url="%s%s" % (HOST, next_page.extract()), callback=self.get_details_by_city)
+            yield Request(url="%s%s" % (SITE, next_page.extract()), callback=self.get_details_by_city)
 
     def login(self, response, isRelogin=False):
         formdata = [
@@ -154,5 +248,6 @@ class MovieSpider(Spider):
             formdata=formdata,
             callback=lambda r, i=isRelogin: self.after_login(r, i)
         )
+
 
 # vi: ft=python:tw=0:ts=4:sw=4
