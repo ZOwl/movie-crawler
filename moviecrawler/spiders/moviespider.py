@@ -141,23 +141,23 @@ class MovieSpider(Spider):
                 if item.extract().find(u"<strong>实时票房：</strong>") != -1:
                     current_box_office = item.xpath("a/text()").extract()[0].strip()
                 if item.extract().find(u"<strong>导演：</strong>") != -1:
-                    directors = ",".join(item.xpath("a/text()").extract())
+                    directors = " ".join(item.xpath("a/text()").extract())
                 if item.extract().find(u"<strong>编剧：</strong>") != -1:
-                    writers = ",".join(item.xpath("a/text()").extract())
+                    writers = " ".join(item.xpath("a/text()").extract())
                 if item.extract().find(u"<strong>主演：</strong>") != -1:
-                    stars = ",".join(item.xpath("a/text()").extract())
+                    stars = " ".join(item.xpath("a/text()").extract())
                 if item.extract().find(u"<strong>上映时间：</strong>") != -1:
                     released = item.xpath("text()").extract()[0]
                 if item.extract().find(u"<strong>片长：</strong>") != -1:
                     length = item.xpath("text()").extract()[0]
                 if item.extract().find(u"<strong>制作国家/地区：</strong>") != -1:
-                    production_regions  = ",".join(item.xpath("a/text()").extract())
+                    production_regions  = " ".join(item.xpath("a/text()").extract())
                 if item.extract().find(u"<strong>类型：</strong>") != -1:
-                    types = ",".join(item.xpath("a/text()").extract())
+                    types = " ".join(item.xpath("a/text()").extract())
                 if item.extract().find(u"<strong>语言：</strong>") != -1:
-                    languages = ",".join(item.xpath("a/text()").extract())
+                    languages = " ".join(item.xpath("a/text()").extract())
                 if item.extract().find(u"<strong>发行制作公司：</strong>") != -1:
-                    companies = ",".join(item.xpath("a/text()").extract())
+                    companies = " ".join(item.xpath("a/text()").extract())
             except Exception as e:
                 pass
 
