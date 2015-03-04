@@ -68,8 +68,17 @@ class Film(PrintableItem, AlchemyBase):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    released = Column(Date)
-    region = Column(String)
+    box_office = Column(String)
+    current_box_office = Column(String)
+    directors = Column(String)
+    writers = Column(String)
+    stars = Column(String)
+    released = Column(String)
+    length = Column(String)
+    production_regions = Column(String)
+    types = Column(String)
+    languages = Column(String)
+    companies = Column(String)
 
 class City(PrintableItem, AlchemyBase):
     __tablename__ = 'cities'

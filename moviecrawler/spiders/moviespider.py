@@ -39,7 +39,7 @@ class MovieSpider(Spider):
     papers = []
     start_urls = ["%s/user/login" % SITE]
 
-    def __init__(self, start=None, end=None, *args, **kwargs):
+    def __init__(self, start=None, end=None, only_film=None, get_schedules=None, *args, **kwargs):
         # LOG_FILE = "scrapy_%s_%s.log" % (self.name, datetime.now())
         # remove the current log
         # log.log.removeObserver(log.log.theLogPublisher.observers[0])
@@ -68,6 +68,10 @@ class MovieSpider(Spider):
         else:
             print "USAGE: scrapy crawler moviespider -a start='[yyyy-mm-dd]' -a end='[yyyy-mm-dd]'"
             return
+
+
+        self.only_film_flag = only_film
+        self.get_schedules_flag = get_schedules
 
         engine = create_engine(settings['SQLALCHEMY_ENGINE_URL'])
         self.session = scoped_session(sessionmaker(engine))()
@@ -103,26 +107,75 @@ class MovieSpider(Spider):
             details = lst[7].xpath("a[@title='%s']/@href" % u"明细")
 
             yield Request(url="%s/film/%s" % (SITE, mid), callback=lambda r, m=mid: self.get_film(r, m))
-            # yield Request(url="%s/film/%s" % (PP_SITE, mid), callback=lambda r, d=cdate: self.get_pp(r, d))
 
-            yield MovieItem(
-                    mid=mid,
-                    date=cdate,
-                    source=source,
-                    name=name,
-                    box_office=box_office,
-                    invalid_sessions=invalid_sessions,
-                    mantime=mantime
-                    )
-            start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
-            yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
+            if not self.only_film_flag:
+                yield MovieItem(
+                        mid=mid,
+                        date=cdate,
+                        source=source,
+                        name=name,
+                        box_office=box_office,
+                        invalid_sessions=invalid_sessions,
+                        mantime=mantime
+                        )
+                start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
+                yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
+
+            if self.get_schedules_flag:
+                yield Request(url="%s/film/%s" % (PP_SITE, mid), callback=lambda r, d=cdate: self.get_pp(r, d))
 
     def get_film(self, response, mid):
         sel = response.selector
         name_item = sel.xpath("//div[@id='main']//div[@class='page-header']//h1/text()")
         name = name_item[0].extract().strip()
 
-        yield Film(id=int(mid), name=name)
+        other_items = sel.xpath("//div[@class='media-body']//ul//li")
+
+        box_office = current_box_office = directors = writers = stars = released = length = production_regions = types = languages = companies = None
+
+        for item in other_items:
+            try:
+                if item.extract().find(u"<strong>总票房：</strong>") != -1:
+                    box_office = item.xpath("a/text()").extract()[0].strip()
+                    if not box_office[-3].isdigit(): box_office = None
+                if item.extract().find(u"<strong>实时票房：</strong>") != -1:
+                    current_box_office = item.xpath("a/text()").extract()[0].strip()
+                if item.extract().find(u"<strong>导演：</strong>") != -1:
+                    directors = ",".join(item.xpath("a/text()").extract())
+                if item.extract().find(u"<strong>编剧：</strong>") != -1:
+                    writers = ",".join(item.xpath("a/text()").extract())
+                if item.extract().find(u"<strong>主演：</strong>") != -1:
+                    stars = ",".join(item.xpath("a/text()").extract())
+                if item.extract().find(u"<strong>上映时间：</strong>") != -1:
+                    released = item.xpath("text()").extract()[0]
+                if item.extract().find(u"<strong>片长：</strong>") != -1:
+                    length = item.xpath("text()").extract()[0]
+                if item.extract().find(u"<strong>制作国家/地区：</strong>") != -1:
+                    production_regions  = ",".join(item.xpath("a/text()").extract())
+                if item.extract().find(u"<strong>类型：</strong>") != -1:
+                    types = ",".join(item.xpath("a/text()").extract())
+                if item.extract().find(u"<strong>语言：</strong>") != -1:
+                    languages = ",".join(item.xpath("a/text()").extract())
+                if item.extract().find(u"<strong>发行制作公司：</strong>") != -1:
+                    companies = ",".join(item.xpath("a/text()").extract())
+            except Exception as e:
+                pass
+
+        yield Film(
+                id=int(mid),
+                name=name,
+                box_office=box_office,
+                current_box_office=current_box_office,
+                directors=directors,
+                writers=writers,
+                stars=stars,
+                released=released,
+                length=length,
+                production_regions=production_regions,
+                types=types,
+                languages=languages,
+                companies=companies
+                )
 
     def get_pp(self, response, cdate):
         sel = response.selector
