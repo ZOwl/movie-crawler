@@ -118,9 +118,8 @@ class MovieSpider(Spider):
                         invalid_sessions=invalid_sessions,
                         mantime=mantime
                         )
-                if mid=="3311":
-                    start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
-                    yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
+                start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
+                yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
 
             if self.get_schedules_flag:
                 yield Request(url="%s/film/%s" % (PP_SITE, mid), callback=lambda r, d=cdate: self.get_pp(r, d))
