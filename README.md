@@ -15,15 +15,30 @@ pip install -e .
 pip install testify
 ```
 
-运行测试：
+### 运行测试
 
 ```bash
 testify tests
 ```
 
-运行程序：
+## 运行程序
 
 ```bash
 scrapy crawl moviespider -a start='[yyyy-mm-dd]' -a end='[yyyy-mm-dd]'
+```
+
+```bash
+scrapy crawl moviespider -a start='[yyyy-mm-dd]' -a end='[yyyy-mm-dd] -a only_film'
+```
+
+```bash
+scrapy crawl moviespider -a start='[yyyy-mm-dd]' -a end='[yyyy-mm-dd] -a get_schedules'
+```
+
+## 导出电影
+
+
+```bash
+sqlite3 -header -csv moviecrawler/scraping.db "select * from films;" > films.csv
 ```
 

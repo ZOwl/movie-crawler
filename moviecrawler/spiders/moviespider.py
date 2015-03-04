@@ -118,8 +118,9 @@ class MovieSpider(Spider):
                         invalid_sessions=invalid_sessions,
                         mantime=mantime
                         )
-                start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
-                yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
+                if mid=="3311":
+                    start = int(time.mktime(time.strptime(cdate, "%Y-%m-%d")))
+                    yield Request(url="%s%s" % (SITE, details.extract()[0]), callback=lambda r,tr=(start, 86400): self.get_details_by_time_range(r,tr))
 
             if self.get_schedules_flag:
                 yield Request(url="%s/film/%s" % (PP_SITE, mid), callback=lambda r, d=cdate: self.get_pp(r, d))
@@ -205,25 +206,30 @@ class MovieSpider(Spider):
             uri = item.xpath("@href").extract()[0]
             yield Request(url="%s%s" % (SITE, uri), callback=lambda r,cn=city_name: self.get_details_by_city(r,cn))
 
-    def get_details_by_time_range(self, response, time_range):
+    def get_details_by_time_range(self, response, time_range, sorted_flag=None):
         start, step = time_range
         sel = response.selector
 
         pager_item = sel.xpath("//ul[@class='pager']")
         pager_number_item = pager_item.xpath("li[@class='pager_count']//span[@class='pager_number']/text()").extract()
         end = start + step
+        missing = None
 
         if pager_number_item:
             pager_number = int(pager_number_item[0].split("/")[1])
             if pager_number > 10:
+                if sorted_flag: missing = True
+                url_prefix = response.url.rsplit("?", 1)[0]
                 if step > 1:
                     new_step = step/2
-                    url_prefix = response.url.rsplit("?", 1)[0]
                     median = start + new_step
                     yield Request(url="%s?start=%s&end=%s" % (url_prefix, start, median), callback=lambda r,tr=(start, new_step): self.get_details_by_time_range(r,tr))
                     yield Request(url="%s?start=%s&end=%s" % (url_prefix, median, end), callback=lambda r,tr=(median, new_step): self.get_details_by_time_range(r,tr))
 
                     return
+                elif step == 1 and not sorted_flag:
+                    yield Request(url=u"%s?sort=desc&order=影院名称&start=%s&end=%s" % (url_prefix, start, step), callback=lambda r,tr=(start, step),sf=True: self.get_details_by_time_range(r,tr,sorted_flag=sf))
+                    yield Request(url=u"%s?sort=asc&order=影院名称&start=%s&end=%s" % (url_prefix, start, step), callback=lambda r,tr=(median, step),sf=True: self.get_details_by_time_range(r,tr,sorted_flag=sf))
             else:
                 next_page = pager_item.xpath("li[@class='pager_next']//a/@href").extract()
                 if(next_page):
@@ -256,7 +262,8 @@ class MovieSpider(Spider):
                     time=temp_records[1].extract(),
                     price=temp_records[2].extract(),
                     seating=temp_records[3].extract(),
-                    attendance=attendance)
+                    attendance=attendance,
+                    missing=missing)
 
     def get_details_by_city(self, response, city_name):
         items = response.selector.xpath("//table[@class='center_table table table-bordered table-condensed']//tbody//tr")

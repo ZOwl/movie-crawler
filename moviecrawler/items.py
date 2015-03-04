@@ -7,17 +7,6 @@ from sqlalchemy.orm import validates, relationship
 
 AlchemyBase = declarative_base()
 
-class PrintableItem(BaseItem):
-    def __str__(self):
-        return self.__repr__()
-
-    def __repr__(self):
-        colnames = (col.name for col in self.__table__.columns)
-        res = []
-        for item in ((col, getattr(self, col)) for col in colnames):
-            res.append("%s=%s" % item)
-        return "<%s %s>" % (self.__class__.__name__, ", ".join(res))
-
 class MovieItem(Item):
     mid = Field()
     date = Field()
@@ -30,6 +19,17 @@ class MovieItem(Item):
     mantime = Field()
     attendance = Field()
 
+class DetailsItem(Item):
+    mid = Field()
+    source = Field()
+    city_name = Field()
+    cinema_name = Field()
+    time = Field()
+    price = Field()
+    seating = Field()
+    attendance = Field()
+    missing = Field()
+
 class PrintableItem(BaseItem):
     def __str__(self):
         return self.__repr__()
@@ -40,16 +40,6 @@ class PrintableItem(BaseItem):
         for item in ((col, getattr(self, col)) for col in colnames):
             res.append("%s=%s" % item)
         return "<%s %s>" % (self.__class__.__name__, ", ".join(res))
-
-class DetailsItem(Item):
-    mid = Field()
-    source = Field()
-    city_name = Field()
-    cinema_name = Field()
-    time = Field()
-    price = Field()
-    seating = Field()
-    attendance = Field()
 
 class PPItem(PrintableItem, AlchemyBase):
     __tablename__ = 'pps'
