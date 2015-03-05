@@ -1,114 +1,5 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
-CREATE TABLE films (
-	id INTEGER NOT NULL, 
-	name VARCHAR NOT NULL, 
-	released DATE, 
-	region VARCHAR, 
-	PRIMARY KEY (id)
-);
-INSERT INTO "films" VALUES(85,'一代宗师(2013)',NULL,NULL);
-INSERT INTO "films" VALUES(945,'神偷奶爸2',NULL,NULL);
-INSERT INTO "films" VALUES(2474,'有种',NULL,NULL);
-INSERT INTO "films" VALUES(2518,'U盘',NULL,NULL);
-INSERT INTO "films" VALUES(2534,'谁动了我的梦想',NULL,NULL);
-INSERT INTO "films" VALUES(2578,'警察故事2013',NULL,NULL);
-INSERT INTO "films" VALUES(2593,'私人订制',NULL,NULL);
-INSERT INTO "films" VALUES(2607,'救火英雄',NULL,NULL);
-INSERT INTO "films" VALUES(2620,'对不起，我爱你',NULL,NULL);
-INSERT INTO "films" VALUES(2623,'圣杯神器：骸骨之城',NULL,NULL);
-INSERT INTO "films" VALUES(2634,'青春小说',NULL,NULL);
-INSERT INTO "films" VALUES(2656,'我是狼',NULL,NULL);
-INSERT INTO "films" VALUES(2660,'喜羊羊与灰太狼之飞马奇遇记',NULL,NULL);
-INSERT INTO "films" VALUES(2669,'前任攻略',NULL,NULL);
-INSERT INTO "films" VALUES(2677,'诡镇',NULL,NULL);
-INSERT INTO "films" VALUES(2678,'熊出没之夺宝熊兵',NULL,NULL);
-INSERT INTO "films" VALUES(2688,'早安，冬日海',NULL,NULL);
-INSERT INTO "films" VALUES(2695,'安德的游戏',NULL,NULL);
-INSERT INTO "films" VALUES(2698,'不爱不散',NULL,NULL);
-INSERT INTO "films" VALUES(2700,'一触即发',NULL,NULL);
-INSERT INTO "films" VALUES(2707,'六福喜事',NULL,NULL);
-INSERT INTO "films" VALUES(2709,'拯救大明星',NULL,NULL);
-INSERT INTO "films" VALUES(2721,'澳门风云',NULL,NULL);
-INSERT INTO "films" VALUES(2722,'夺命地铁',NULL,NULL);
-INSERT INTO "films" VALUES(2723,'巴啦啦小魔仙之魔法的考验',NULL,NULL);
-INSERT INTO "films" VALUES(2724,'爸爸去哪儿',NULL,NULL);
-INSERT INTO "films" VALUES(2726,'极地大冒险2',NULL,NULL);
-INSERT INTO "films" VALUES(2727,'金牌流浪狗',NULL,NULL);
-INSERT INTO "films" VALUES(2742,'房间里的舞蹈',NULL,NULL);
-INSERT INTO "films" VALUES(2743,'哭恋',NULL,NULL);
-INSERT INTO "films" VALUES(2745,'大寒桃花开',NULL,NULL);
-INSERT INTO "films" VALUES(2760,'怒放之青春再见',NULL,NULL);
-INSERT INTO "films" VALUES(2764,'大话天仙',NULL,NULL);
-INSERT INTO "films" VALUES(2771,'永不消失的广播',NULL,NULL);
-INSERT INTO "films" VALUES(2777,'霍比特人：史矛革之战',NULL,NULL);
-INSERT INTO "films" VALUES(2782,'西游记之大闹天宫',NULL,NULL);
-INSERT INTO "films" VALUES(2856,'霍比特人3：去而复归',NULL,NULL);
-INSERT INTO "films" VALUES(3198,'夜半梳头',NULL,NULL);
-INSERT INTO "films" VALUES(3311,'变形金刚4：绝迹重生',NULL,NULL);
-INSERT INTO "films" VALUES(3389,'冬荫功2：拳霸天下',NULL,NULL);
-INSERT INTO "films" VALUES(3440,'有种你爱我',NULL,NULL);
-INSERT INTO "films" VALUES(3461,'猩球崛起2：黎明之战',NULL,NULL);
-INSERT INTO "films" VALUES(3474,'白蛇传说',NULL,NULL);
-INSERT INTO "films" VALUES(3583,'智取威虎山3D',NULL,NULL);
-INSERT INTO "films" VALUES(3655,'露水红颜',NULL,NULL);
-INSERT INTO "films" VALUES(3664,'母亲的梦想',NULL,NULL);
-INSERT INTO "films" VALUES(3680,'青涩日记',NULL,NULL);
-INSERT INTO "films" VALUES(3708,'鸣梁海战',NULL,NULL);
-INSERT INTO "films" VALUES(3716,'密道追踪之阴兵虎符',NULL,NULL);
-INSERT INTO "films" VALUES(3717,'谁是卧底之王牌',NULL,NULL);
-INSERT INTO "films" VALUES(3718,'撒娇女人最好命',NULL,NULL);
-INSERT INTO "films" VALUES(3759,'找个高富帅',NULL,NULL);
-INSERT INTO "films" VALUES(3767,'微爱之渐入佳境',NULL,NULL);
-INSERT INTO "films" VALUES(3768,'我的早更女友',NULL,NULL);
-INSERT INTO "films" VALUES(3769,'一步之遥',NULL,NULL);
-INSERT INTO "films" VALUES(3770,'匆匆那年',NULL,NULL);
-INSERT INTO "films" VALUES(3771,'太平轮(上)',NULL,NULL);
-INSERT INTO "films" VALUES(3777,'花咒',NULL,NULL);
-INSERT INTO "films" VALUES(3778,'推拿',NULL,NULL);
-INSERT INTO "films" VALUES(3780,'怨灵人偶',NULL,NULL);
-INSERT INTO "films" VALUES(3781,'男人不可以穷',NULL,NULL);
-INSERT INTO "films" VALUES(3783,'十万个冷笑话',NULL,NULL);
-INSERT INTO "films" VALUES(3785,'37次想你',NULL,NULL);
-INSERT INTO "films" VALUES(3792,'爱你不等来生',NULL,NULL);
-INSERT INTO "films" VALUES(3799,'天河',NULL,NULL);
-INSERT INTO "films" VALUES(3806,'暴走神探',NULL,NULL);
-INSERT INTO "films" VALUES(3812,'闯堂兔2疯狂马戏团',NULL,NULL);
-INSERT INTO "films" VALUES(3814,'黄克功案件',NULL,NULL);
-INSERT INTO "films" VALUES(3816,'重返20岁',NULL,NULL);
-INSERT INTO "films" VALUES(3822,'还魂之迷失曼谷',NULL,NULL);
-INSERT INTO "films" VALUES(3824,'谍·莲花',NULL,NULL);
-INSERT INTO "films" VALUES(3828,'热血男人帮',NULL,NULL);
-INSERT INTO "films" VALUES(3832,'神探驾到',NULL,NULL);
-INSERT INTO "films" VALUES(3834,'一路惊喜',NULL,NULL);
-INSERT INTO "films" VALUES(3837,'狼图腾',NULL,NULL);
-INSERT INTO "films" VALUES(3842,'龙骑侠',NULL,NULL);
-INSERT INTO "films" VALUES(3843,'斑马总动员',NULL,NULL);
-INSERT INTO "films" VALUES(3844,'喜羊羊与灰太狼大电影7',NULL,NULL);
-INSERT INTO "films" VALUES(3858,'熊出没之雪岭熊风',NULL,NULL);
-INSERT INTO "films" VALUES(3859,'前目的地',NULL,NULL);
-INSERT INTO "films" VALUES(3865,'坚不可摧',NULL,NULL);
-INSERT INTO "films" VALUES(3866,'末日浩劫',NULL,NULL);
-INSERT INTO "films" VALUES(3867,'亡命地中海',NULL,NULL);
-INSERT INTO "films" VALUES(3868,'抢劫坚果店',NULL,NULL);
-INSERT INTO "films" VALUES(3869,'安妮：纽约奇缘',NULL,NULL);
-INSERT INTO "films" VALUES(3870,'第七子：降魔之战',NULL,NULL);
-INSERT INTO "films" VALUES(3871,'博物馆奇妙夜3',NULL,NULL);
-INSERT INTO "films" VALUES(3876,'功夫3D',NULL,NULL);
-INSERT INTO "films" VALUES(3885,'向阳花开',NULL,NULL);
-INSERT INTO "films" VALUES(3886,'奔跑吧，兄弟',NULL,NULL);
-INSERT INTO "films" VALUES(3897,'怪谈',NULL,NULL);
-INSERT INTO "films" VALUES(3906,'味道中国',NULL,NULL);
-INSERT INTO "films" VALUES(3907,'宝贝，对不起',NULL,NULL);
-INSERT INTO "films" VALUES(3910,'我要你开花',NULL,NULL);
-INSERT INTO "films" VALUES(3914,'一代宗师(3D版)',NULL,NULL);
-INSERT INTO "films" VALUES(3915,'时光大战',NULL,NULL);
-INSERT INTO "films" VALUES(3916,'伞头和他的女人',NULL,NULL);
-INSERT INTO "films" VALUES(3933,'桔子的天空',NULL,NULL);
-INSERT INTO "films" VALUES(3943,'黄金福将',NULL,NULL);
-INSERT INTO "films" VALUES(3953,'奇缘灰姑娘',NULL,NULL);
-INSERT INTO "films" VALUES(3962,'喜羊羊与灰太狼之羊年喜羊羊',NULL,NULL);
-INSERT INTO "films" VALUES(3963,'奔驰的大葱',NULL,NULL);
 CREATE TABLE pps (
 	mid INTEGER NOT NULL, 
 	PRIMARY KEY (mid)
@@ -4807,7 +4698,7 @@ INSERT INTO "theaters" VALUES(4158,'南京金逸影城大观天地店',428);
 INSERT INTO "theaters" VALUES(4159,'金逸国际电影城 肇庆店',409);
 INSERT INTO "theaters" VALUES(4160,'南京幸福蓝海六合紫晶影城',428);
 INSERT INTO "theaters" VALUES(4161,'大地数字影院--鞍山新华银河影院',67);
-INSERT INTO "theaters" VALUES(4162,'朝阳剧场                      ',236);
+INSERT INTO "theaters" VALUES(4162,'朝阳剧场                      ',318);
 INSERT INTO "theaters" VALUES(4163,'合肥橙天嘉禾蜀西影城',369);
 INSERT INTO "theaters" VALUES(4164,'大地数字影院--海口美兰望海国际影城',15);
 INSERT INTO "theaters" VALUES(4165,'广州华影青宫电影城',340);
@@ -4817,7 +4708,7 @@ INSERT INTO "theaters" VALUES(4168,'泰州万达广场店',64);
 INSERT INTO "theaters" VALUES(4169,'马鞍山华夏星光影城',203);
 INSERT INTO "theaters" VALUES(4170,'大地数字影院--佛山南海巴黎春天',305);
 INSERT INTO "theaters" VALUES(4171,'金逸厦门海沧店',128);
-INSERT INTO "theaters" VALUES(4172,'金逸影城朝阳大悦城店',236);
+INSERT INTO "theaters" VALUES(4172,'金逸影城朝阳大悦城店',318);
 INSERT INTO "theaters" VALUES(4173,'耀莱成龙国际影城洛阳店',445);
 INSERT INTO "theaters" VALUES(4174,'北京天通苑龙德广场店',318);
 INSERT INTO "theaters" VALUES(4175,'秦皇岛金逸国际电影城',309);
@@ -5123,7 +5014,7 @@ INSERT INTO "theaters" VALUES(4474,'中影国际影城南京大光路店',428);
 INSERT INTO "theaters" VALUES(4475,'南京艾米1895电影街',428);
 INSERT INTO "theaters" VALUES(4476,'重庆UME国际影城-解放碑店',376);
 INSERT INTO "theaters" VALUES(4477,'大地数字影院--安顺中环商业广场',230);
-INSERT INTO "theaters" VALUES(4478,'金逸国际影城朝阳大悦城店',236);
+INSERT INTO "theaters" VALUES(4478,'金逸国际影城朝阳大悦城店',318);
 INSERT INTO "theaters" VALUES(4479,'金逸影城 武汉销品茂店',418);
 INSERT INTO "theaters" VALUES(4480,'大地数字影院--梧州锦泰商业广场',32);
 INSERT INTO "theaters" VALUES(4481,'大地数字影院--清远城市广场',84);
@@ -6127,6 +6018,74 @@ INSERT INTO "theaters" VALUES(5480,'大地影院--大庆红岗庆南休闲购物
 INSERT INTO "theaters" VALUES(5481,'大地数字影院--济南缤纷五洲',225);
 INSERT INTO "theaters" VALUES(5482,'金逸扬州明发店',140);
 INSERT INTO "theaters" VALUES(5483,'大地数字影院--北京延庆金锣湾',318);
+INSERT INTO "theaters" VALUES(5484,'大地影院北海和安商港店',1);
+INSERT INTO "theaters" VALUES(5485,'大地影院新乡新玛特店',45);
+INSERT INTO "theaters" VALUES(5486,'大地影院澳德乐时代广场店',396);
+INSERT INTO "theaters" VALUES(5487,'大地影院阳光时代广场店',59);
+INSERT INTO "theaters" VALUES(5488,'大地影院长乐长山湖店',367);
+INSERT INTO "theaters" VALUES(5489,'大地影院梧州锦泰店',32);
+INSERT INTO "theaters" VALUES(5490,'大地影院中环新生活店',257);
+INSERT INTO "theaters" VALUES(5491,'大地影院三信金鼎店',87);
+INSERT INTO "theaters" VALUES(5492,'大地数字影院--唐山兴海名都',299);
+INSERT INTO "theaters" VALUES(5493,'天津延安影剧院',238);
+INSERT INTO "theaters" VALUES(5494,'东莞中影星河电影城石龙店',81);
+INSERT INTO "theaters" VALUES(5495,'17.5影城南京SHE影城',428);
+INSERT INTO "theaters" VALUES(5496,'大地数字影院--临沂多彩城',58);
+INSERT INTO "theaters" VALUES(5497,'广州番禺沙湾数字电影院',340);
+INSERT INTO "theaters" VALUES(5498,'南阳市电影城',117);
+INSERT INTO "theaters" VALUES(5499,'17.5影城靖江恒天店',268);
+INSERT INTO "theaters" VALUES(5500,'株洲东都广场店',49);
+INSERT INTO "theaters" VALUES(5501,'大地数字影院--福州则徐广场',102);
+INSERT INTO "theaters" VALUES(5502,'贵阳银座影城',30);
+INSERT INTO "theaters" VALUES(5503,'大地数字影院--盐城尚城国际',143);
+INSERT INTO "theaters" VALUES(5504,'佛山南庄文化中心影剧院',305);
+INSERT INTO "theaters" VALUES(5505,'东莞中影星河电影城桥头店',81);
+INSERT INTO "theaters" VALUES(5506,'北京市工人俱乐部',318);
+INSERT INTO "theaters" VALUES(5507,'安吉安健影院',269);
+INSERT INTO "theaters" VALUES(5508,'大地数字影院--东莞东城君豪',81);
+INSERT INTO "theaters" VALUES(5509,'深圳百誉世贸影城',245);
+INSERT INTO "theaters" VALUES(5510,'郑州中影国际影城',373);
+INSERT INTO "theaters" VALUES(5511,'北京地质礼堂',318);
+INSERT INTO "theaters" VALUES(5512,'17.5影城上海北桥影城',11);
+INSERT INTO "theaters" VALUES(5513,'大地数字影院--重庆大渡口新宝龙易城',376);
+INSERT INTO "theaters" VALUES(5514,'厦门梦露歌剧院影城',128);
+INSERT INTO "theaters" VALUES(5515,'奥纳影城郑州店',373);
+INSERT INTO "theaters" VALUES(5516,'荆门银都影城',178);
+INSERT INTO "theaters" VALUES(5517,'奥纳影城佳木斯店',78);
+INSERT INTO "theaters" VALUES(5518,'台州椒江和平电影城',258);
+INSERT INTO "theaters" VALUES(5519,'上海海上国际影城莘庄店',11);
+INSERT INTO "theaters" VALUES(5520,'17.5上海中环影城',11);
+INSERT INTO "theaters" VALUES(5521,'南京科技馆影城',428);
+INSERT INTO "theaters" VALUES(5522,'四川雅安嘉裕国际影城',356);
+INSERT INTO "theaters" VALUES(5523,'大地数字影院--上海松江飞航广场',11);
+INSERT INTO "theaters" VALUES(5524,'广州五月花电影城',340);
+INSERT INTO "theaters" VALUES(5525,'武汉天汇影院',418);
+INSERT INTO "theaters" VALUES(5526,'重庆嘉裕国际影城(开县店）',376);
+INSERT INTO "theaters" VALUES(5527,'大地数字影院--太原杏花岭盛世华庭',402);
+INSERT INTO "theaters" VALUES(5528,'17.5上海又一城影城',11);
+INSERT INTO "theaters" VALUES(5529,'17.5影城南通曼都今典影城',284);
+INSERT INTO "theaters" VALUES(5530,'星美国际影城沈阳大悦城店',312);
+INSERT INTO "theaters" VALUES(5531,'上海国金百丽宫影院',11);
+INSERT INTO "theaters" VALUES(5532,'万达国际影城天通苑店',318);
+INSERT INTO "theaters" VALUES(5533,'中影火山湖电影城番禺店',340);
+INSERT INTO "theaters" VALUES(5534,'万达国际影城CBD店',318);
+INSERT INTO "theaters" VALUES(5535,'海南宜欣银龙电影城',15);
+INSERT INTO "theaters" VALUES(5536,'17.5影城今日家园店',318);
+INSERT INTO "theaters" VALUES(5537,'涪陵嘉裕国际影城',376);
+INSERT INTO "theaters" VALUES(5538,'17.5影城锡都时代今典影城',46);
+INSERT INTO "theaters" VALUES(5539,'黑龙江青冈今世界影城',198);
+INSERT INTO "theaters" VALUES(5540,'17.5影城春都店',11);
+INSERT INTO "theaters" VALUES(5541,'辉县大有国际影城',45);
+INSERT INTO "theaters" VALUES(5542,'海秀银龙电影城',15);
+INSERT INTO "theaters" VALUES(5543,'连江鑫凤凰影院',102);
+INSERT INTO "theaters" VALUES(5544,'巨幕影城光谷店',418);
+INSERT INTO "theaters" VALUES(5545,'17.5影城比如世界店',318);
+INSERT INTO "theaters" VALUES(5546,'17.5影城镇海金枢路店',68);
+INSERT INTO "theaters" VALUES(5547,'17.5影城官渡区世纪城店',93);
+INSERT INTO "theaters" VALUES(5548,'17.5影城北虹店',11);
+INSERT INTO "theaters" VALUES(5549,'17.5影城今典花园店',318);
+INSERT INTO "theaters" VALUES(5550,'奥纳影城华南店',271);
+INSERT INTO "theaters" VALUES(5551,'大地数字影院--大连香榭里广场',271);
 CREATE TABLE schedules (
 	id INTEGER NOT NULL, 
 	film_id INTEGER, 
@@ -6135,4 +6094,55 @@ CREATE TABLE schedules (
 	FOREIGN KEY(film_id) REFERENCES films (id), 
 	FOREIGN KEY(theater_id) REFERENCES theaters (id)
 );
+CREATE TABLE films (
+	id INTEGER NOT NULL, 
+	name VARCHAR NOT NULL, 
+	box_office VARCHAR, 
+	current_box_office VARCHAR, 
+	directors VARCHAR, 
+	writers VARCHAR, 
+	stars VARCHAR, 
+	released VARCHAR, 
+	length VARCHAR, 
+	production_regions VARCHAR, 
+	types VARCHAR, 
+	languages VARCHAR, 
+	companies VARCHAR, 
+	PRIMARY KEY (id)
+);
+INSERT INTO "films" VALUES(599,'阿童木','4623万',NULL,'大卫·博维斯 大卫·鲍沃斯','Timothy Harris 手塚治虫','弗莱迪·海默 克里斯汀·贝尔 尼古拉斯·凯奇 塞缪尔·杰克逊 查理兹·塞隆 比尔·奈伊 唐纳德·萨瑟兰','2009-10-23','94分钟','美国 中国大陆 中国香港 日本','动作 动画 家庭 科幻','普通话 英语 日语','香港意马公司');
+INSERT INTO "films" VALUES(2186,'一夜惊喜','1.71亿',NULL,'金依萌',NULL,'黎明 李治廷 范冰冰 徐峥 倪虹洁 吴佩慈 丹尼尔·海尼 蒋劲夫 丹尼尔．海尼 刘晏辰','2013-08-09','100分钟','中国大陆','剧情 喜剧 爱情',NULL,NULL);
+INSERT INTO "films" VALUES(2884,'催眠大师','2.74亿',NULL,'陈正道',NULL,'徐峥 莫文蔚','2014-04-29','100分钟','中国大陆','剧情 惊悚 悬疑',NULL,NULL);
+INSERT INTO "films" VALUES(3006,'西藏天空','935万',NULL,NULL,NULL,'多布杰','2014-04-15','118分钟','中国大陆','剧情 历史',NULL,NULL);
+INSERT INTO "films" VALUES(3031,'归来','2.92亿',NULL,'张艺谋',NULL,'闫妮 郭涛 陈道明 张嘉译 巩俐 祖峰 辛柏青 刘佩琦','2014-05-16','130分钟','中国大陆','剧情 爱情 历史',NULL,NULL);
+INSERT INTO "films" VALUES(3198,'夜半梳头','1330万',NULL,NULL,NULL,'李威 王李丹妮','2014-06-13','90分钟','中国大陆','剧情 恐怖',NULL,NULL);
+INSERT INTO "films" VALUES(3214,'魔幻仙踪','2180万',NULL,'未知',NULL,NULL,'2014-05-30','80分钟','中国大陆','动画 冒险',NULL,NULL);
+INSERT INTO "films" VALUES(3215,'太空熊猫总动员','350万',NULL,'郑成峰',NULL,'未知','2014-05-31','80分钟','中国大陆','动画 冒险 奇幻',NULL,NULL);
+INSERT INTO "films" VALUES(3222,'潜艇总动员4：章鱼奇遇记','4812.26万',NULL,'何子力',NULL,'范楚绒 洪海天','2014-05-30','80分钟','中国大陆','动画 冒险',NULL,NULL);
+INSERT INTO "films" VALUES(3247,'哥斯拉','4.81亿',NULL,NULL,NULL,NULL,'2014-06-13','123分钟','美国','动作 冒险 科幻',NULL,NULL);
+INSERT INTO "films" VALUES(3249,'分手大师','6.66亿',NULL,NULL,NULL,'吴京 杨幂 邓超 孙俪 柳岩','2014-06-27','120分钟','中国大陆','剧情 喜剧 爱情',NULL,NULL);
+INSERT INTO "films" VALUES(3262,'疯狂72小时','2727万',NULL,NULL,NULL,'闫妮 邵兵 包贝尔 李菁 耿乐 乔任梁 李佳璇','2014-06-05','100分钟','中国大陆','剧情 喜剧',NULL,NULL);
+INSERT INTO "films" VALUES(3263,'激浪青春','480万',NULL,'梁柏坚',NULL,'曾志伟 黄轩 邵兵 黄晓明 陈乔恩 于小伟','2014-06-06','90分钟','中国大陆','剧情 爱情',NULL,NULL);
+INSERT INTO "films" VALUES(3275,'分手达人','430万',NULL,NULL,NULL,'罗海琼 九孔 刘承俊 林鹏 范逸臣 李欣汝','2014-06-06','90分钟','中国大陆','剧情 喜剧 爱情',NULL,NULL);
+INSERT INTO "films" VALUES(3286,'明日边缘','4.07亿',NULL,NULL,NULL,'汤姆．克鲁斯','2014-06-06','113分钟','美国','动作 科幻',NULL,NULL);
+INSERT INTO "films" VALUES(3299,'摩纳哥王妃','2612.76万',NULL,NULL,NULL,NULL,'2014-06-17','103分钟','美国 法国 意大利 比利时','剧情 传记',NULL,NULL);
+INSERT INTO "films" VALUES(3309,'天上的菊美','1036.16万',NULL,NULL,NULL,'陈瑾 江疏影','2014-05-20','105分钟','中国大陆','剧情',NULL,NULL);
+INSERT INTO "films" VALUES(3318,'永远的焦裕禄','299.14万',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO "films" VALUES(3325,'沉睡魔咒','2.96亿',NULL,NULL,NULL,'沙尔托．科普雷','2014-06-20','135分钟','美国','剧情 动作 冒险',NULL,NULL);
+INSERT INTO "films" VALUES(3474,'白蛇传说','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO "films" VALUES(3664,'母亲的梦想','','9896','胡大中',NULL,'邵峰 曲海峰 曲江涛 胡大中 王丽媛 赵铁人 关丹莉','2015-02-28','96分钟','中国大陆','剧情 家庭',NULL,NULL);
+INSERT INTO "films" VALUES(3833,'天将雄师','6.61亿','1290.81万','李仁港',NULL,'约翰·库萨克 成龙 沙妮·文森 艾德里安·布洛迪 邢思杰 Peng Lin Benny Urquidez Raiden Integra Temur Mamisashvili 崔始源 保罗·菲利普·克拉克 Tomer Oz Philippe Joly Harry Oram Murray Clive Walker','2015-02-19','120分钟','中国大陆','剧情 动作 冒险 战争 历史',NULL,NULL);
+INSERT INTO "films" VALUES(3834,'一路惊喜','6934万',NULL,'金依萌  潘安子  章家瑞  宋迪在',NULL,'林家栋 夏雨 阚清子 郭采洁 梅婷 萧敬腾 张译 蓝燕 蒋劲夫 凤小岳 大鹏 赵丽颖 刘晏辰 金依萌 张辛苑 巩汉林 孙艺洲 易小星 乔杉 白客 葛布','2015-02-12','100分钟','中国大陆','喜剧 爱情 家庭',NULL,NULL);
+INSERT INTO "films" VALUES(3837,'狼图腾','5.32亿','1637.94万','让-雅克·阿诺',NULL,'冯绍峰 窦骁','2015-02-19','130分钟','中国大陆','剧情 冒险',NULL,NULL);
+INSERT INTO "films" VALUES(3838,'钟馗伏魔：雪妖魔灵','3.81亿','686.44万','赵天宇',NULL,'李冰冰 陈坤 包贝尔 赵文瑄 杨子姗 吉克隽逸','2015-02-19','120分钟','中国大陆','动作 奇幻 古装',NULL,NULL);
+INSERT INTO "films" VALUES(3848,'爸爸的假期','1.09亿','2.07万','王岳伦',NULL,'郭涛 成东日 林志颖 田亮 成俊 郭子睿 王岳伦 王诗龄 田雨橙 张亮 张悦轩','2015-02-19','90分钟','中国大陆','喜剧 家庭',NULL,NULL);
+INSERT INTO "films" VALUES(3851,'爸爸去哪儿2','2.19亿','257.54万','谢涤葵',NULL,'吴镇宇 李锐 陆毅 黄磊 杨阳洋 Feynman 黄忆慈 曹格 曹三丰 曹华恩 陆雨萱 杨威','2015-02-19','90分钟','中国大陆','家庭 儿童 真人秀',NULL,NULL);
+INSERT INTO "films" VALUES(3865,'坚不可摧','3678万',NULL,'安吉丽娜·朱莉',NULL,'杰·科特尼 多姆纳尔·格利森 加内特·赫德兰 杰克·奥康奈尔 芬·维特洛克 亚历克斯·罗素 苏菲·杜拉 斯宾赛·洛夫兰科 卢克·崔德威 石原贵雅 摩根·格莉芬 约翰·德利奥 马达莱娜·伊斯基亚勒 肖恩·奥唐纳 斯蒂芬·斯坦顿 文森佐·阿玛托 约翰·马加罗 路易斯·麦金托什 罗斯·安德森 C·J·瓦罗瑞 马修·克罗克','2015-01-30','137分钟','美国','剧情 动作 战争 运动',NULL,NULL);
+INSERT INTO "films" VALUES(3875,'蜡笔总动员','652万',NULL,'弗兰克·格拉德斯通',NULL,'乐嘉 克里斯蒂娜·里奇 欧文·威尔逊 弗兰克·格拉德斯通 西恩·奥斯汀 伊丽莎白·戴利 杰西卡·卡普肖 克雷格·费格森 塔拉·斯特朗 罗西·培瑞兹 韦恩·布莱迪 杰斯·哈梅尔 大卫·卡耶','2015-02-06','90分钟','中国大陆','喜剧 动画 家庭',NULL,NULL);
+INSERT INTO "films" VALUES(3898,'冲上云霄','1.49亿','261.07万','叶伟信  邹凯光',NULL,'古天乐 吴镇宇 郭采洁 郑秀文 张智霖','2015-02-19','120分钟','中国大陆','剧情',NULL,NULL);
+INSERT INTO "films" VALUES(3907,'宝贝，对不起',NULL,NULL,'潘礼平  杜林  李锐  王骏',NULL,'邵兵 小小彬 王艳 马景涛 王泓钦 小彬彬 马世天 邵子娇 邵子恒','2015-01-31','100分钟','中国大陆','剧情 纪录片 冒险 家庭 儿童',NULL,NULL);
+INSERT INTO "films" VALUES(3932,'超能陆战队','1.19亿','1684.16万','唐·霍尔  克里斯·威廉姆斯',NULL,'詹姆斯·克伦威尔 丹尼尔·海尼 玛娅·鲁道夫 斯科特·安第斯 瑞恩·波特 T·J·米勒 杰米·钟 小达蒙·韦恩斯 珍尼希斯·罗德里格兹 艾伦·图代克 亚布拉哈姆·本鲁比 凯蒂·洛斯 比利·布什 丹尼尔·吉尔森 保罗·布里格斯','2015-03-01','108分钟','美国','喜剧 动作 动画 冒险 科幻',NULL,NULL);
+INSERT INTO "films" VALUES(3945,'死亡之谜之双鱼玉佩',NULL,NULL,'黄正杰',NULL,'温兆伦 黄征 余思潞 隋抒洋','2015-02-06','90分钟','中国大陆','冒险 悬疑',NULL,NULL);
+INSERT INTO "films" VALUES(3951,'吉星高照2015','831万','245.12万','晴朗',NULL,'曾志伟 王祖蓝 黄一山 黄一飞 元秋 陈嘉桦 苑琼丹 温超 陈静 湛琪清','2015-02-13','100分钟','中国大陆','喜剧',NULL,NULL);
+INSERT INTO "films" VALUES(3995,'大喜临门','','2610','黄朝亮',NULL,'林心如 九孔 王彩桦 李东学 林美秀 猪哥亮 寇世勋 素珠 林美照 夏禕 陈慕义 黄西田 浩角翔起 林俊杰 任贤齐','2015-03-06','100分钟','中国大陆','喜剧',NULL,NULL);
 COMMIT;

@@ -34,6 +34,8 @@ ITEM_PIPELINES = {
     'moviecrawler.pipelines.PPPipeline': 1
     }
 
+LOG_LEVEL = 'INFO'
+
 # Include localsettings.py
 local_settings_path = path.join(PROJECT_ROOT, 'localsettings.py')
 if path.exists(local_settings_path):

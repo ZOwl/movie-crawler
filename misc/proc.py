@@ -18,9 +18,9 @@ with open('cities.csv', 'rb') as f:
 with open('details.csv', 'rb') as f:
     spamreader = csv.reader(f)
     for row in spamreader:
-        city = row[7].strip()
+        city = row[8].strip()
         if city == "":
-            d[row[4]] = ""
+            d[row[5]] = ""
 
 for k,v in d.items():
     city = []
