@@ -21,6 +21,12 @@ pip install testify
 testify tests
 ```
 
+## 初始化数据库
+
+```bash
+sqlite3 moviecrawler/scraping.db < misc/data.sql
+```
+
 ## 运行程序
 
 ```bash
